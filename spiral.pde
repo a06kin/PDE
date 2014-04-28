@@ -7,8 +7,6 @@ float alfa = 15.0;
 
 float E = (float) Math.E;
 
-float[] b = {1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.8};
-
 float b1 = 1.5;
 
 void setup() {
@@ -18,12 +16,6 @@ void setup() {
 }
 
 void draw() {
-	// for (int i = 0; i < b.length; ++i) {
-	// 	float r = pow(a * E, b[i] * minT);
-	// 	float x = r * cos(minT);
-	// 	float y = r * sin(minT);
-	// 	point(x + 256, y + 256);
-	// }
 	translate(height/2, width/2);
 
 	float r = pow(a * E, b1 * minT);
