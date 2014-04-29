@@ -17,6 +17,10 @@ float E = (float) Math.E;
 
 float b1 = 1.5;
 
+Box first;
+
+Box[] other;
+
 void setup() {
 	smooth();
 	background(255, 255, 255);
@@ -24,20 +28,39 @@ void setup() {
 
 	gifExport = new GifMaker(this, getDate() + ".gif", 100);
 	gifExport.setRepeat(0); // make it an "endless" animation
+
+	first = new Box(0,0,20);
+
+	other = new Box[24];
+
+	for (int i = 0; i < other.length; ++i) {
+		other[i] = new Box(0,0,20);
+	}
 }
 
 void draw() {
+	noStroke();
+	rectMode(CORNER);
+	//fill(255, 10); // semi-transparent white
+	fill(255);
+  rect(0, 0, width, height);
+
+  stroke(1);
+
 	translate(height/2, width/2);
 
 	float r = pow(a * E, b1 * minT);
 	float x = r * cos(minT);
 	float y = r * sin(minT);
-	point(x, y);
 
-	for (int j = 0; j < 360/15; ++j) {
+	first.move(x,y);
+	first.display();
+
+	for (int j = 0; j < other.length; ++j) {
 		float xs = x * cos(alfa * j) - y * sin(alfa * j);
 		float ys = x * sin(alfa * j) + y * cos(alfa * j);
-		point(xs, ys);
+		other[j].move(xs,ys);
+		other[j].display();
 	}
 	
 	minT+= step;
@@ -76,4 +99,33 @@ String getDate(){
   s += ":" + String.valueOf(sec);
 
   return s;
+}
+
+class Box { 
+  color c; //TODO: set color in constructor & use it
+  float size;
+  PVector data;
+  PVector speed;
+
+  Box(float x, float y, float size){
+  	data = new PVector(x, y);
+  	this.size = size;
+  }
+
+
+  void display() {
+  	if ((data.x > -width/2 && data.x < width/2) && (data.y > -height/2 && data.y < height/2)){
+	    rectMode(CENTER);
+	    rect(data.x,data.y,size,size);
+	  }else{
+	  	println("out");
+	  }
+  }
+
+  void move(float x, float y){
+  	if (data != null){
+  		data.x = x;
+  		data.y = y;
+  	}
+  }
 }
